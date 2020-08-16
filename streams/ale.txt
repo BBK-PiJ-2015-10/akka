@@ -1,0 +1,7 @@
+my-host-1 | web-app | ok    | 2015-08-12T12:12:00.127Z | 5 tickets sold. ||
+my-host-1 | web-app | error | 2015-08-12T12:12:02.127Z | exception!! ||
+
+my-host-1 | web-app | error | 2015-08-12T12:12:02.127Z | culon!! ||
+my-host-1 | web-app | error | 2015-08-12T12:12:02.127Z | fiasco!! ||
+my-host-1 | web-app | error | 2015-08-12T12:12:02.127Z | goodone!! ||
+

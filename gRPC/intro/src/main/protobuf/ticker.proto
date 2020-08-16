@@ -1,0 +1,19 @@
+syntax = "proto3";
+package ticker;
+
+message TickerSymbol {
+  string name = 1;
+}
+
+message StockValue {
+  string name = 1;
+  uint32 value = 2;
+}
+
+service TickerService {
+
+  rpc MonitorSymbol(TickerSymbol) returns (stream StockValue) {}
+
+}
+
+

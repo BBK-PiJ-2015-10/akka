@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "de.innfactory.svc1.grpc";
+option java_outer_classname = "ServiceCommunication";
+
+package helloword;
+
+// The greeting service definition.
+service GreeterService {
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+    string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+    string message = 1;
+    int64 greeted = 2;
+}
