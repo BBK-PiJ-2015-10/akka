@@ -1,12 +1,15 @@
+package streams
 
-import java.nio.file.{Path,Paths}
-import akka.actor.ActorSystem
-import akka.stream.scaladsl.{FileIO,Flow,Framing,Sink}
-import akka.stream.OverflowStrategy
-import akka.util.ByteString
+
+import java.nio.file.{Path, Paths}
+
 import akka.NotUsed
+import akka.actor.ActorSystem
+import akka.stream.OverflowStrategy
+import akka.stream.scaladsl.{FileIO, Flow, Framing, Sink}
+import akka.util.ByteString
 
-import scala.concurrent.{ExecutionContext,Future}
+import scala.concurrent.{ExecutionContext, Future}
 
 
 

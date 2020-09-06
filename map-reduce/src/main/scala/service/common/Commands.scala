@@ -1,10 +1,6 @@
-package actors.common
+package service.common
 
 case class StartFetching(source: String)
 
 
 
-
-trait Commands {
-
-}

@@ -1,4 +1,4 @@
-package example1
+package actors.interop.example1
 
 import akka.actor.{Actor, ActorLogging, Props}
 
