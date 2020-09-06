@@ -1,0 +1,3 @@
+package streams object ApplicationStreamRunner {
+
+}
