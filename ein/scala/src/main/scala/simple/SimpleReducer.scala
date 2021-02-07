@@ -1,3 +1,5 @@
+package simple
+
 import akka.actor.{ActorRef, FSM, Props}
 
 case object Submit
@@ -7,7 +9,7 @@ trait ReducerState
 case object Idle extends ReducerState
 case object Soliciting extends ReducerState
 
-case class ReducerData(lastTimeOut: Long)
+case class ReducerData(statePricesUpdate: Set[PriceUpdate])
 
 object SimpleReducer {
   def props(handlers: ActorRef, consumer: ActorRef, maxCapacity: Int) : Props = Props(new SimpleReducer(handlers,
@@ -16,7 +18,7 @@ object SimpleReducer {
 
 class SimpleReducer(handlers: ActorRef, consumer: ActorRef, maxCapacity: Int) extends FSM[ReducerState,ReducerData] {
 
-  startWith(Idle,ReducerData(0))
+  startWith(Idle,ReducerData(Set()))
 
   when(Idle){
     case Event(Submit,_) => {
@@ -27,11 +29,11 @@ class SimpleReducer(handlers: ActorRef, consumer: ActorRef, maxCapacity: Int) ex
   }
 
   when(Soliciting){
-    case Event(priceUpdate: Set[PriceUpdate],_) => {
-      val toDrop = priceUpdate.size - maxCapacity
-      val priceToSend = priceUpdate.drop(toDrop)
+    case Event(pricesUpdate: Set[PriceUpdate],_) => {
+      val toDrop = pricesUpdate.size - maxCapacity
+      val priceToSend = pricesUpdate.drop(toDrop)
       priceToSend.foreach(price => consumer ! price)
-      log.debug(s"Have sent to consumer a basket of size ${priceUpdate.size}")
+      log.debug(s"Have sent to consumer a basket of size ${pricesUpdate.size}")
       stay()
     }
     case Event(Submit,_) => {

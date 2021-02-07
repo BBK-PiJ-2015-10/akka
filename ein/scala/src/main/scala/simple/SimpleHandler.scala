@@ -1,3 +1,5 @@
+package simple
+
 import akka.actor.{Actor, ActorLogging, Props}
 
 object SimpleHandler {
@@ -25,11 +27,11 @@ class SimpleHandler(maxCapacity: Int) extends Actor with ActorLogging{
 
     case Submit => {
       log.debug(s"Sending to Reducer ${priceUpdates.size} prices")
+      sender() ! priceUpdates
+      log.debug(s"Sent to Reducer ${priceUpdates.size} prices")
       if (!priceUpdates.isEmpty){
-        sender() ! priceUpdates
         priceUpdates = Set()
       }
-      log.debug(s"Sent to Reducer ${priceUpdates.size} prices")
     }
 
   }

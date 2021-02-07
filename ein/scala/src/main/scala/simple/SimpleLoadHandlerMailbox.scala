@@ -1,4 +1,6 @@
-import akka.actor.{ActorSystem}
+package simple
+
+import akka.actor.ActorSystem
 import akka.dispatch.{PriorityGenerator, UnboundedStablePriorityMailbox}
 import com.typesafe.config.Config
 
@@ -6,6 +8,6 @@ class SimpleLoadHandlerMailbox(settings: ActorSystem.Settings, config: Config) e
   UnboundedStablePriorityMailbox(
     PriorityGenerator {
       case Submit => 0
-      case priceUpdate: PriceUpdate => 1
+      case _: PriceUpdate => 1
     }
   )

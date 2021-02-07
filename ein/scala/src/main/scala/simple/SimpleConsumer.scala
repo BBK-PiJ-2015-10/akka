@@ -1,3 +1,5 @@
+package simple
+
 import akka.actor.{Actor, ActorLogging, Props}
 
 object SimpleConsumer {
