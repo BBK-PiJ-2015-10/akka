@@ -1,14 +1,14 @@
-package simple
+package sharded
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Props}
-
-case class Submit()
+import akka.actor.{Actor, ActorLogging, Props}
 
 object SimpleHandler {
-  def props(maxCapacity: Int,consumer: ActorRef) : Props = Props(new SimpleHandler(maxCapacity,consumer))
+  def props(maxCapacity: Int) : Props = Props(new SimpleHandler(maxCapacity))
 }
 
-class SimpleHandler(maxCapacity: Int, consumer: ActorRef) extends Actor with ActorLogging{
+class SimpleHandler(maxCapacity: Int) extends Actor with ActorLogging{
+
+  context.system.eventStream.subscribe(self,classOf[Submit])
 
   var priceUpdates : Set[PriceUpdate]= Set()
 
@@ -29,7 +29,7 @@ class SimpleHandler(maxCapacity: Int, consumer: ActorRef) extends Actor with Act
 
     case Submit => {
       log.debug(s"Sending to Reducer ${priceUpdates.size} prices")
-      priceUpdates.foreach(price => consumer ! price)
+      sender() ! priceUpdates
       log.debug(s"Sent to Reducer ${priceUpdates.size} prices")
       if (!priceUpdates.isEmpty){
         priceUpdates = Set()

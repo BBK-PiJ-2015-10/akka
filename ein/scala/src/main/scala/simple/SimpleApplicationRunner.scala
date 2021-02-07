@@ -12,11 +12,11 @@ object SimpleApplicationRunner extends App {
   val system = ActorSystem("prices")
   implicit val ec = system.dispatcher
   val maxPriceUpdatesPerSecond = 100
-  val simpleHandler = system.actorOf(SimpleHandler.props(maxPriceUpdatesPerSecond).withDispatcher("simple-loadhandler-dispatcher"),
-    "simpleHandler")
   val simpleConsumer = system.actorOf(SimpleConsumer.props(), "simpleConsumer")
-  val simpleReducer = system.actorOf(SimpleReducer.props(simpleHandler, simpleConsumer, maxPriceUpdatesPerSecond), "simpleReducer")
-  system.scheduler.schedule(0 milliseconds, 1000 milliseconds, simpleReducer, Submit)
+  val simpleHandler = system.actorOf(SimpleHandler.props(maxPriceUpdatesPerSecond,simpleConsumer).withDispatcher
+  ("simple-loadhandler-dispatcher"),
+    "simpleHandler")
+  system.scheduler.schedule(0 milliseconds, 1000 milliseconds, simpleHandler, Submit)
 
   val prices: List[PriceUpdate] = List(
     PriceUpdate("Apple", 97.85),

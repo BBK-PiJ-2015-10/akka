@@ -1,8 +1,8 @@
-package simple
+package sharded
 
 import akka.actor.{ActorRef, FSM, Props}
 
-case object Submit
+case class Submit()
 
 trait ReducerState
 
@@ -23,7 +23,8 @@ class SimpleReducer(handlers: ActorRef, consumer: ActorRef, maxCapacity: Int) ex
   when(Idle){
     case Event(Submit,_) => {
       log.debug(s"Moving Reducer to soliciting")
-      handlers ! Submit
+      context.system.eventStream.publish(Submit)
+      //handlers ! Submit
       goto(Soliciting)
     }
   }
