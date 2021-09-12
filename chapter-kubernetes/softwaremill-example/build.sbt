@@ -35,8 +35,9 @@ libraryDependencies ++= {
     "com.lightbend.akka.management" %% "akka-management-cluster-http" %akkaManagementVersion,
     "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" %akkaManagementVersion,
     
-    "com.typesafe.akka" %% "akka-discovery" %"2.6.1",
-    
+    //"com.typesafe.akka" %% "akka-discovery" %"2.6.1",
+    "com.typesafe.akka" %% "akka-discovery" %akkaVersion,
+
     "com.github.TanUkkii007" %%"akka-cluster-custom-downing" % "0.0.13"
     
     

@@ -1,5 +1,3 @@
 package streams.documentation.examples.browser
 
-class Author {
-
-}
+case class Author(handle: String)

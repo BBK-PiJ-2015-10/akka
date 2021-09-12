@@ -1,3 +1,3 @@
 package streams.documentation.examples.browser
 
-case class Hashtag()
+case class Hashtag(name: String)

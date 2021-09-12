@@ -1,4 +1,4 @@
-import akka.actor.{ActorSystem, PoisonPill}
+import akka.actor.{ActorSystem, PoisonPill,FSM}
 import akka.dispatch.{PriorityGenerator, UnboundedStablePriorityMailbox}
 import com.typesafe.config.Config
 
@@ -7,16 +7,19 @@ class MyPrioMailbox(settings: ActorSystem.Settings, config: Config)
     // Create a new PriorityGenerator, lower prio means more important
     PriorityGenerator {
       // highpriority messages should be treated first if possible
-      case "highpriority" => 0
+
+      case FSM.StateTimeout => 0
+
+      case "highpriority" => 1
 
       // lowpriority messages should be treated last if possible
-      case "lowpriority" => 2
+      case "lowpriority" => 3
 
       // PoisonPill when no other left
-      case PoisonPill => 3
+      case PoisonPill => 4
 
       // We default to 1, which is in between high and low
-      case otherwise => 1
+      case otherwise => 2
     })
 
 
