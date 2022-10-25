@@ -55,7 +55,7 @@ object ApplicationRunner {
           None,
           ShardedRecordSinks.extractEntityId,
           ShardedRecordSinks.extractShardId)
-      system.actorOf(ApiRecordConsumerRest.props(sourcesUrl,sinkUrl
+      system.actorOf(ApiRecordConsumerRest.props(sourcesUrl,sinkUrl))
     } else {
       ClusterSharding(system)
         .start(
