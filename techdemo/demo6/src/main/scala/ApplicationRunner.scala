@@ -49,12 +49,19 @@ object ApplicationRunner {
     if(configName.equals("chief")) {
       println("I am the master monkeys")
       ClusterSharding(system)
-        .startProxy(
+        .start(
           ShardedRecordSinks.shardName,
-          Some("bastard"),
-          None,
+          RecordSink.props(sinkUrl),
+          ClusterShardingSettings(system),
           ShardedRecordSinks.extractEntityId,
           ShardedRecordSinks.extractShardId)
+//      ClusterSharding(system)
+//        .startProxy(
+//          ShardedRecordSinks.shardName,
+//          Some("bastard"),
+//          None,
+//          ShardedRecordSinks.extractEntityId,
+//          ShardedRecordSinks.extractShardId)
       system.actorOf(ApiRecordConsumerRest.props(sourcesUrl,sinkUrl))
     } else {
       ClusterSharding(system)
